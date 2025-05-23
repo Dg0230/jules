@@ -1,7 +1,8 @@
 from .base import Base
 from .material import Material, MaterialSet, FileTypeEnum, MaterialStatusEnum
 from .merchant import Merchant
-from .merchant_financials import MerchantFinancials # Add this line
+from .merchant_financials import MerchantFinancials
+from .review import Review, ReviewPlatformEnum # Add this line
 
 __all__ = [
     "Base", 
@@ -10,5 +11,7 @@ __all__ = [
     "FileTypeEnum", 
     "MaterialStatusEnum",
     "Merchant",
-    "MerchantFinancials" # Add this
+    "MerchantFinancials",
+    "Review", # Add this
+    "ReviewPlatformEnum" # Add this
 ]

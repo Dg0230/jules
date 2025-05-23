@@ -12,11 +12,10 @@ class Merchant(Base):
 
     materials = relationship("Material", back_populates="merchant", cascade="all, delete-orphan")
     material_sets = relationship("MaterialSet", back_populates="merchant", cascade="all, delete-orphan")
-    
-    # Add relationship to MerchantFinancials (One-to-One)
     financials = relationship("MerchantFinancials", back_populates="merchant", uselist=False, cascade="all, delete-orphan")
     
-    # reviews = relationship("Review", back_populates="merchant", cascade="all, delete-orphan") # Placeholder
+    # Add relationship to Review
+    reviews = relationship("Review", back_populates="merchant", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<Merchant(id={self.id}, name='{self.name}')>"

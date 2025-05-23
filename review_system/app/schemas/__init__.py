@@ -6,16 +6,22 @@ from .material import (
 from .merchant import (
     MerchantBase, MerchantCreate, MerchantUpdate, MerchantResponse, MerchantInDB 
 )
-from .merchant_financials import ( # Add these lines
+from .merchant_financials import (
     MerchantFinancialsBase, MerchantFinancialsCreate, 
     MerchantFinancialsUpdate, MerchantFinancialsResponse
 )
+from .review import (
+    ReviewBase, ReviewCreate, ReviewUpdate, ReviewResponse
+)
+from .dashboard import MerchantDashboardResponse # Add this line
 
 __all__ = [
     "MaterialBase", "MaterialCreate", "MaterialUpdate", "MaterialResponse",
     "MaterialSetBase", "MaterialSetCreate", "MaterialSetUpdate", "MaterialSetResponse",
     "MaterialSetAssociation",
     "MerchantBase", "MerchantCreate", "MerchantUpdate", "MerchantResponse", "MerchantInDB",
-    "MerchantFinancialsBase", "MerchantFinancialsCreate", # Add these
-    "MerchantFinancialsUpdate", "MerchantFinancialsResponse" 
+    "MerchantFinancialsBase", "MerchantFinancialsCreate", 
+    "MerchantFinancialsUpdate", "MerchantFinancialsResponse",
+    "ReviewBase", "ReviewCreate", "ReviewUpdate", "ReviewResponse",
+    "MerchantDashboardResponse" # Add this
 ]
