@@ -14,15 +14,23 @@ from .review import (
     ReviewBase, ReviewCreate, ReviewUpdate, ReviewResponse
 )
 from .dashboard import MerchantDashboardResponse
-from .review_tag import ReviewTagBase, ReviewTagCreate, ReviewTagUpdate, ReviewTagResponse
+from .review_tag import (
+    ReviewTagBase, ReviewTagCreate, ReviewTagUpdate, ReviewTagResponse
+)
 from .prompt_template import (
     PromptTemplateBase, PromptTemplateCreate, 
     PromptTemplateUpdate, PromptTemplateResponse
 )
-from .custom_ai_prompt import ( # Add these lines
+from .custom_ai_prompt import (
     CustomAIPromptBase, CustomAIPromptCreate,
     CustomAIPromptUpdate, CustomAIPromptResponse
 )
+from .channel_partner import ( 
+    ChannelPartnerBase, ChannelPartnerCreate,
+    ChannelPartnerUpdate, ChannelPartnerResponse,
+    ChannelPartnerFinancialsSummaryResponse # New schema
+)
+
 
 __all__ = [
     "MaterialBase", "MaterialCreate", "MaterialUpdate", "MaterialResponse",
@@ -33,9 +41,12 @@ __all__ = [
     "MerchantFinancialsUpdate", "MerchantFinancialsResponse",
     "ReviewBase", "ReviewCreate", "ReviewUpdate", "ReviewResponse",
     "MerchantDashboardResponse",
-    "ReviewTagBase", "ReviewTagCreate", "ReviewTagUpdate", "ReviewTagResponse",
+    "ReviewTagBase", "ReviewTagCreate", "ReviewTagUpdate", "ReviewTagResponse", # Added ReviewTagBase for completeness
     "PromptTemplateBase", "PromptTemplateCreate", 
     "PromptTemplateUpdate", "PromptTemplateResponse",
-    "CustomAIPromptBase", "CustomAIPromptCreate", # Add these
-    "CustomAIPromptUpdate", "CustomAIPromptResponse"
+    "CustomAIPromptBase", "CustomAIPromptCreate",
+    "CustomAIPromptUpdate", "CustomAIPromptResponse",
+    "ChannelPartnerBase", "ChannelPartnerCreate", 
+    "ChannelPartnerUpdate", "ChannelPartnerResponse",
+    "ChannelPartnerFinancialsSummaryResponse" 
 ]

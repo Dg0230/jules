@@ -34,6 +34,10 @@ from app.models.material import Material, MaterialSet, FileTypeEnum, MaterialSta
 from app.models.merchant import Merchant
 from app.models.merchant_financials import MerchantFinancials
 from app.models.review import Review, ReviewPlatformEnum
+from app.models.associations import reviewtag_materialset_association # Ensure this is imported if it defines tables directly
+from app.models.review_tag import ReviewTag, ReviewTagStatusEnum
+from app.models.prompt_template import PromptTemplate, PromptTemplateCategoryEnum
+from app.models.custom_ai_prompt import CustomAIPrompt
 
 # Ensure sqlalchemy.url is set, prioritizing environment variables if available.
 # This makes sure Alembic uses the correct synchronous database URL.

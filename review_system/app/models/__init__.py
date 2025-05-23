@@ -6,7 +6,8 @@ from .review import Review, ReviewPlatformEnum
 from .associations import reviewtag_materialset_association
 from .review_tag import ReviewTag, ReviewTagStatusEnum
 from .prompt_template import PromptTemplate, PromptTemplateCategoryEnum
-from .custom_ai_prompt import CustomAIPrompt # Add this line
+from .custom_ai_prompt import CustomAIPrompt
+from .channel_partner import ChannelPartner # Add this line
 
 __all__ = [
     "Base", 
@@ -23,5 +24,6 @@ __all__ = [
     "ReviewTagStatusEnum",
     "PromptTemplate", 
     "PromptTemplateCategoryEnum",
-    "CustomAIPrompt" # Add this
+    "CustomAIPrompt",
+    "ChannelPartner" # Add this
 ]

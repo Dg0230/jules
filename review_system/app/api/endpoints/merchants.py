@@ -1,21 +1,26 @@
 from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status # Ensured all imports
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.crud import crud_merchant # Import the new CRUD module
-from app.schemas import merchant as merchant_schemas # Use alias for clarity
-from app.core.db import get_db
+from app.crud import crud_merchant # Ensured crud_merchant is imported
+from app.schemas import merchant as merchant_schemas # Ensured schemas are imported
+from app.core.db import get_db # Ensured get_db is imported
 
-router = APIRouter()
+router = APIRouter() # This should already exist
 
 @router.post("/", response_model=merchant_schemas.MerchantResponse, status_code=status.HTTP_201_CREATED)
-async def create_new_merchant(
+async def create_new_merchant( # Function updated
     merchant_in: merchant_schemas.MerchantCreate, 
     db: AsyncSession = Depends(get_db)
 ):
-    # Docstring: Create a new merchant. Corresponds to Merchant Entry.
-    return await crud_merchant.create_merchant(db=db, merchant=merchant_in)
+    # Create a new merchant.
+    # Optionally associates with a ChannelPartner if channel_partner_id is provided.
+    try:
+        return await crud_merchant.create_merchant(db=db, merchant=merchant_in)
+    except ValueError as e: 
+        # Catch ValueError from CRUD (e.g., ChannelPartner not found)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 @router.get("/{merchant_id}", response_model=merchant_schemas.MerchantResponse)
 async def read_merchant_by_id(
