@@ -2,15 +2,8 @@ import enum
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table, Enum as SQLAlchemyEnum
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func # For server-side default timestamp
-from app.models.base import Base # Import Base from the new file
-
-# Define an association table for the many-to-many relationship
-# between Material and MaterialSet.
-material_materialset_association = Table(
-    'material_materialset_association', Base.metadata,
-    Column('material_id', Integer, ForeignKey('materials.id'), primary_key=True),
-    Column('materialset_id', Integer, ForeignKey('materialsets.id'), primary_key=True)
-)
+from app.models.base import Base
+# Removed: from app.models.merchant import Merchant
 
 class FileTypeEnum(enum.Enum):
     IMAGE = "image"
@@ -22,28 +15,29 @@ class MaterialStatusEnum(enum.Enum):
     USED = "used"
     EXPIRED = "expired"
 
+material_materialset_association = Table(
+    'material_materialset_association', Base.metadata,
+    Column('material_id', Integer, ForeignKey('materials.id'), primary_key=True),
+    Column('materialset_id', Integer, ForeignKey('materialsets.id'), primary_key=True)
+)
+
 class Material(Base):
     __tablename__ = "materials"
 
     id = Column(Integer, primary_key=True, index=True)
-    # In a multi-tenant app, merchant_id would link to a Merchants table.
-    # For now, we can make it an Integer or String, assuming merchant identity is handled elsewhere or will be added later.
-    merchant_id = Column(Integer, index=True, nullable=False) # Assuming a simple integer ID for now
     
-    content_url = Column(String, nullable=False) # URL or path to the material content
+    # Updated merchant_id to be a ForeignKey
+    merchant_id = Column(Integer, ForeignKey("merchants.id"), nullable=False, index=True)
+    
+    content_url = Column(String, nullable=False)
     file_type = Column(SQLAlchemyEnum(FileTypeEnum), nullable=False)
-    
     upload_date = Column(DateTime(timezone=True), server_default=func.now())
     status = Column(SQLAlchemyEnum(MaterialStatusEnum), nullable=False, default=MaterialStatusEnum.UNUSED)
-    
-    # Using sqlalchemy.dialects.postgresql.ARRAY for tags if specific to PostgreSQL and want array type
-    # For more general JSONB is also an option: from sqlalchemy.dialects.postgresql import JSONB
-    # tags = Column(JSONB) 
-    # For simplicity, let's use a string for tags, assuming comma-separated values or similar.
-    # This can be changed to a more complex type like ARRAY or JSONB if advanced querying on tags is needed.
     tags = Column(String, nullable=True) 
 
-    # Relationship to MaterialSet (many-to-many)
+    # Define relationship to Merchant
+    merchant = relationship("Merchant", back_populates="materials")
+
     sets = relationship(
         "MaterialSet",
         secondary=material_materialset_association,
@@ -58,11 +52,16 @@ class MaterialSet(Base):
     __tablename__ = "materialsets"
 
     id = Column(Integer, primary_key=True, index=True)
-    merchant_id = Column(Integer, index=True, nullable=False) # Link to the merchant who owns this set
+    
+    # Updated merchant_id to be a ForeignKey
+    merchant_id = Column(Integer, ForeignKey("merchants.id"), nullable=False, index=True)
+    
     name = Column(String, index=True, nullable=False)
     description = Column(String, nullable=True)
 
-    # Relationship to Material (many-to-many)
+    # Define relationship to Merchant
+    merchant = relationship("Merchant", back_populates="material_sets")
+    
     materials = relationship(
         "Material",
         secondary=material_materialset_association,
