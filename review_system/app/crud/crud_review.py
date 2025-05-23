@@ -31,7 +31,8 @@ async def get_reviews_by_merchant(
     limit: int = 100,
     platform: Optional[ReviewPlatformEnum] = None,
     is_verified: Optional[bool] = None,
-    is_positive: Optional[bool] = None
+    is_positive: Optional[bool] = None,
+    review_tag_id: Optional[int] = None # Add this new parameter
 ) -> List[Review]:
     # Get a list of reviews for a specific merchant with pagination and optional filters.
     query = select(Review).filter(Review.merchant_id == merchant_id)
@@ -41,6 +42,8 @@ async def get_reviews_by_merchant(
         query = query.filter(Review.is_verified == is_verified)
     if is_positive is not None:
         query = query.filter(Review.is_positive == is_positive)
+    if review_tag_id is not None: # Add this filter condition
+        query = query.filter(Review.review_tag_id == review_tag_id)
         
     query = query.order_by(Review.review_date.desc()).offset(skip).limit(limit)
     result = await db.execute(query)

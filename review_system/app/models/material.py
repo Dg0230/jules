@@ -1,9 +1,9 @@
 import enum
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table, Enum as SQLAlchemyEnum
 from sqlalchemy.orm import relationship
-from sqlalchemy.sql import func # For server-side default timestamp
+from sqlalchemy.sql import func 
 from app.models.base import Base
-# Removed: from app.models.merchant import Merchant
+from app.models.associations import reviewtag_materialset_association # Import the new association table
 
 class FileTypeEnum(enum.Enum):
     IMAGE = "image"
@@ -15,6 +15,7 @@ class MaterialStatusEnum(enum.Enum):
     USED = "used"
     EXPIRED = "expired"
 
+# This is the original association table for Material <-> MaterialSet
 material_materialset_association = Table(
     'material_materialset_association', Base.metadata,
     Column('material_id', Integer, ForeignKey('materials.id'), primary_key=True),
@@ -25,19 +26,14 @@ class Material(Base):
     __tablename__ = "materials"
 
     id = Column(Integer, primary_key=True, index=True)
-    
-    # Updated merchant_id to be a ForeignKey
     merchant_id = Column(Integer, ForeignKey("merchants.id"), nullable=False, index=True)
-    
     content_url = Column(String, nullable=False)
     file_type = Column(SQLAlchemyEnum(FileTypeEnum), nullable=False)
     upload_date = Column(DateTime(timezone=True), server_default=func.now())
     status = Column(SQLAlchemyEnum(MaterialStatusEnum), nullable=False, default=MaterialStatusEnum.UNUSED)
     tags = Column(String, nullable=True) 
 
-    # Define relationship to Merchant
     merchant = relationship("Merchant", back_populates="materials")
-
     sets = relationship(
         "MaterialSet",
         secondary=material_materialset_association,
@@ -52,20 +48,23 @@ class MaterialSet(Base):
     __tablename__ = "materialsets"
 
     id = Column(Integer, primary_key=True, index=True)
-    
-    # Updated merchant_id to be a ForeignKey
     merchant_id = Column(Integer, ForeignKey("merchants.id"), nullable=False, index=True)
-    
     name = Column(String, index=True, nullable=False)
     description = Column(String, nullable=True)
 
-    # Define relationship to Merchant
     merchant = relationship("Merchant", back_populates="material_sets")
     
     materials = relationship(
         "Material",
-        secondary=material_materialset_association,
+        secondary=material_materialset_association, # Original M2M with Material
         back_populates="sets"
+    )
+
+    # Add new M2M relationship to ReviewTag
+    review_tags = relationship(
+        "ReviewTag",
+        secondary=reviewtag_materialset_association, # Use the new association table
+        back_populates="material_sets"
     )
 
     def __repr__(self):

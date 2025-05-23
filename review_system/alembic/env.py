@@ -14,10 +14,6 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# add your model's MetaData object here
-# for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
 # --- Start of custom modifications ---
 import os
 import sys
@@ -27,24 +23,30 @@ from dotenv import load_dotenv
 # This assumes env.py is in alembic/
 PROJECT_ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, PROJECT_ROOT)
-load_dotenv(os.path.join(PROJECT_ROOT, '.env'))
+# Construct the path to the .env file relative to the PROJECT_ROOT
+dotenv_path = os.path.join(PROJECT_ROOT, '.env')
+load_dotenv(dotenv_path)
 
+
+# Import Base and all models for Alembic autogenerate
 from app.models.base import Base
-# Import all your models here so Alembic detects them
-from app.models.material import Material, MaterialSet
-# Add any other models you have: from app.models.your_model import YourModel
+from app.models.material import Material, MaterialSet, FileTypeEnum, MaterialStatusEnum
+from app.models.merchant import Merchant
+from app.models.merchant_financials import MerchantFinancials
+from app.models.review import Review, ReviewPlatformEnum
 
-# Update sqlalchemy.url from environment variables
-# Ensure this URL is synchronous (e.g., postgresql:// not postgresql+asyncpg://)
+# Ensure sqlalchemy.url is set, prioritizing environment variables if available.
+# This makes sure Alembic uses the correct synchronous database URL.
 db_url_env = os.environ.get('DATABASE_URL_ALEMBIC', os.environ.get('DATABASE_URL'))
 if db_url_env:
-    if db_url_env.startswith("postgresql+asyncpg://"):
+    if db_url_env.startswith("postgresql+asyncpg://"): # Convert asyncpg to psycopg2 for Alembic
         db_url_env = db_url_env.replace("postgresql+asyncpg://", "postgresql://")
     config.set_main_option('sqlalchemy.url', db_url_env)
-# If not set, Alembic will use the URL from alembic.ini
+# If DATABASE_URL is not set in .env, Alembic will use the one from alembic.ini
 
 target_metadata = Base.metadata
 # --- End of custom modifications ---
+
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
