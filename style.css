@@ -191,3 +191,26 @@ tbody tr:nth-child(even) {
 .unit-grid-link-special:hover {
     background: #e68a00;
 }
+
+/* Image Placeholder Styles */
+.image-placeholder {
+    background-color: #eef7e8; /* A very light, pleasant green */
+    border: 3px dashed #4CAF50; /* Dashed green border */
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 1rem 0;
+    text-align: center;
+    color: #556b2f; /* Dark Olive Green text */
+    font-size: 1.1rem;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+}
+
+.image-placeholder::before {
+    content: '🖼️ ';
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
