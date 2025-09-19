@@ -1,0 +1,131 @@
+/* General Body Styles */
+body {
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Marker Felt', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: #f0f8ff; /* AliceBlue - a light, friendly blue */
+    color: #333;
+}
+
+/* Header Styles */
+header {
+    background: #4CAF50; /* A warm, friendly green */
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+    border-bottom: 5px solid #FF9800; /* An orange accent */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+/* Main Content Styles */
+main {
+    padding: 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Unit and Appendix Links */
+.unit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 0;
+    list-style: none;
+}
+
+.unit-grid li a {
+    display: block;
+    background: #fff;
+    padding: 2rem 1rem;
+    text-align: center;
+    border-radius: 15px;
+    text-decoration: none;
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: 3px solid #FFC107; /* A sunny yellow border */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.unit-grid li a:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    color: #4CAF50;
+}
+
+/* Section Styles */
+.unit-section {
+    background: #ffffff;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 10px solid #4CAF50;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.unit-section h2 {
+    color: #FF9800;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 0.5rem;
+}
+
+/* Dialogue Styles */
+.dialogue {
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 2px dashed #FFC107;
+    border-radius: 10px;
+}
+
+.dialogue p {
+    margin: 0.5rem 0;
+}
+
+.translation {
+    color: #888;
+    font-style: italic;
+    display: none; /* Hidden by default */
+}
+
+/* Interactive Button */
+.toggle-translation {
+    background: #FF9800;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.toggle-translation:hover {
+    background: #e68a00;
+}
+
+/* Vocabulary Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+th, td {
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
