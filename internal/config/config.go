@@ -26,6 +26,8 @@ type Config struct {
 	AliyunAccessKeySecret string
 	SmsSignName           string
 	SmsTemplateCode       string
+	// Database
+	PostgresDSN string
 }
 
 // Load loads configuration from environment variables.
@@ -51,6 +53,8 @@ func Load() *Config {
 		AliyunAccessKeySecret: getEnv("ALIYUN_ACCESS_KEY_SECRET", ""),
 		SmsSignName:           getEnv("ALIYUN_SMS_SIGN_NAME", "AuthService"),
 		SmsTemplateCode:       getEnv("ALIYUN_SMS_TEMPLATE_CODE", "SMS_12345678"),
+		// Database
+		PostgresDSN: getEnv("POSTGRES_DSN", "postgres://user:password@localhost:5432/authdb?sslmode=disable"),
 	}
 }
 

@@ -3,7 +3,6 @@ package handler
 import (
 	"auth-service/internal/config"
 	"auth-service/internal/service/auth"
-	"auth-service/internal/service/sms"
 	"auth-service/internal/service/user"
 	"auth-service/internal/storage/memory"
 	"bytes"
@@ -18,8 +17,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// setupFullTestServer creates a test server with all services wired up, including a mock sms service.
-func setupFullTestServerWithMocks() (*gin.Engine, *auth.JWTService, *sms.MockSMSService) {
+// setupFullTestServer creates a test server with all services wired up.
+func setupFullTestServer() (*gin.Engine, *auth.JWTService) {
 	gin.SetMode(gin.TestMode)
 	router := gin.New()
 
@@ -27,8 +26,7 @@ func setupFullTestServerWithMocks() (*gin.Engine, *auth.JWTService, *sms.MockSMS
 	cfg := config.Load()
 	db := memory.New()
 	jwtService := auth.NewJWTService(cfg)
-	mockSmsService := new(sms.MockSMSService)
-	userService := user.NewUserService(db, mockSmsService)
+	userService := user.NewUserService(db, nil) // No SMS service for these tests
 	userHandler := NewUserHandler(userService, jwtService)
 
 	// Routes
@@ -39,11 +37,11 @@ func setupFullTestServerWithMocks() (*gin.Engine, *auth.JWTService, *sms.MockSMS
 		api.POST("/login/otp/request", userHandler.RequestOTP)
 		api.POST("/login/otp/verify", userHandler.VerifyOTP)
 	}
-	return router, jwtService, mockSmsService
+	return router, jwtService
 }
 
 func TestRegisterAndLoginFlow(t *testing.T) {
-	router, jwtService, _ := setupFullTestServerWithMocks()
+	router, jwtService := setupFullTestServer()
 
 	// --- Test Registration ---
 	t.Run("Successful Registration", func(t *testing.T) {
@@ -118,13 +116,13 @@ func TestRegisterAndLoginFlow(t *testing.T) {
 }
 
 func TestOTPFlow(t *testing.T) {
-	router, jwtService, _ := setupFullTestServerWithMocks()
+	router, jwtService := setupFullTestServer()
 	email := "otp-user@example.com"
 
 	// 1. Request OTP
 	var otpCode string
 	t.Run("Request OTP", func(t *testing.T) {
-		reqBody := fmt.Sprintf(`{"email": "%s"}`, email)
+		reqBody := fmt.Sprintf(`{"identifier": "%s"}`, email)
 		req, _ := http.NewRequest(http.MethodPost, "/api/login/otp/request", bytes.NewBufferString(reqBody))
 		req.Header.Set("Content-Type", "application/json")
 		w := httptest.NewRecorder()
@@ -140,7 +138,7 @@ func TestOTPFlow(t *testing.T) {
 
 	// 2. Verify with wrong OTP
 	t.Run("Verify with wrong OTP", func(t *testing.T) {
-		reqBody := fmt.Sprintf(`{"email": "%s", "code": "000000"}`, email)
+		reqBody := fmt.Sprintf(`{"identifier": "%s", "code": "000000"}`, email)
 		req, _ := http.NewRequest(http.MethodPost, "/api/login/otp/verify", bytes.NewBufferString(reqBody))
 		req.Header.Set("Content-Type", "application/json")
 		w := httptest.NewRecorder()
@@ -151,7 +149,7 @@ func TestOTPFlow(t *testing.T) {
 
 	// 3. Verify with correct OTP
 	t.Run("Verify with correct OTP", func(t *testing.T) {
-		reqBody := fmt.Sprintf(`{"email": "%s", "code": "%s"}`, email, otpCode)
+		reqBody := fmt.Sprintf(`{"identifier": "%s", "code": "%s"}`, email, otpCode)
 		req, _ := http.NewRequest(http.MethodPost, "/api/login/otp/verify", bytes.NewBufferString(reqBody))
 		req.Header.Set("Content-Type", "application/json")
 		w := httptest.NewRecorder()

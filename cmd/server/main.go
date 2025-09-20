@@ -10,10 +10,12 @@ import (
 	"auth-service/internal/middleware"
 	"auth-service/internal/service/auth"
 	"auth-service/internal/service/oauth"
-	"auth-service/internal/service/sms"
 	"auth-service/internal/service/user"
 	"auth-service/internal/service/wechat"
+	"auth-service/internal/storage"
 	"auth-service/internal/storage/memory"
+	"auth-service/internal/storage/postgres"
+	"context"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,15 +26,25 @@ func main() {
 	cfg := config.Load()
 
 	// 2. Init storage
-	db := memory.New()
+	var db storage.Storage
+	if cfg.PostgresDSN != "" {
+		slog.Info("initializing postgresql storage")
+		pgStore, err := postgres.New(context.Background(), cfg)
+		if err != nil {
+			slog.Error("failed to initialize postgresql storage, falling back to in-memory", "error", err)
+			db = memory.New()
+		} else {
+			db = pgStore
+			// TODO: Add a defer pgStore.Close() but need to handle graceful shutdown
+		}
+	} else {
+		slog.Info("initializing in-memory storage")
+		db = memory.New()
+	}
 
 	// 3. Init services
 	jwtService := auth.NewJWTService(cfg)
-	smsService, err := sms.NewAliyunSMSService(cfg)
-	if err != nil {
-		slog.Warn("failed to create Aliyun SMS service, phone login will be unavailable", "error", err)
-	}
-	userService := user.NewUserService(db, smsService)
+	userService := user.NewUserService(db, nil) // Temporarily passing nil for smsService
 	oauthService := oauth.NewOAuthService(db)
 	wechatService := wechat.NewWeChatService(cfg)
 

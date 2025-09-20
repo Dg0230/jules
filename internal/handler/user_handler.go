@@ -6,7 +6,6 @@ import (
 	"auth-service/internal/storage"
 	"errors"
 	"net/http"
-	"net/mail"
 
 	"github.com/gin-gonic/gin"
 )
