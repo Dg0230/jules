@@ -13,6 +13,7 @@ type Storage interface {
 	// User methods
 	CreateUser(ctx context.Context, user *domain.User) error
 	FindUserByID(ctx context.Context, id uuid.UUID) (*domain.User, error)
+	FindUserByEmail(ctx context.Context, email string) (*domain.User, error)
 
 	// Identity methods
 	CreateIdentity(ctx context.Context, identity *domain.Identity) error

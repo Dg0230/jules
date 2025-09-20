@@ -26,7 +26,7 @@ func setupWeChatTestServer() *gin.Engine {
 	cfg := config.Load()
 	db := memory.New()
 	jwtService := auth.NewJWTService(cfg)
-	oauthService := oauth.NewOAuthService(db)
+	oauthService := oauth.NewOAuthService(db, cfg)
 	wechatService := wechat.NewWeChatService(cfg)
 	wechatHandler := NewWeChatHandler(wechatService, oauthService, jwtService, db)
 

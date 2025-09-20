@@ -66,6 +66,31 @@ func (s *MemStorage) StoreWeChatSession(ctx context.Context, session *domain.WeC
 	return nil
 }
 
+func (s *MemStorage) FindUserByEmail(ctx context.Context, email string) (*domain.User, error) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+
+	var targetIdentity *domain.Identity
+	for _, identity := range s.identities {
+		// This logic assumes the ProviderID for email-based identities is the email itself.
+		if identity.ProviderID == email {
+			targetIdentity = identity
+			break
+		}
+	}
+
+	if targetIdentity == nil {
+		return nil, storage.ErrUserNotFound
+	}
+
+	user, exists := s.users[targetIdentity.UserID]
+	if !exists {
+		return nil, storage.ErrUserNotFound
+	}
+
+	return user, nil
+}
+
 // FindWeChatSessionByTicket retrieves a WeChat login session by its ticket.
 func (s *MemStorage) FindWeChatSessionByTicket(ctx context.Context, ticket string) (*domain.WeChatLoginSession, error) {
 	s.mu.RLock()

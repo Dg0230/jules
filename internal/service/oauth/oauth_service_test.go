@@ -1,6 +1,7 @@
 package oauth
 
 import (
+	"auth-service/internal/config"
 	"auth-service/internal/storage/memory"
 	"context"
 	"testing"
@@ -11,7 +12,8 @@ import (
 
 func TestFindOrCreateUserFromProvider(t *testing.T) {
 	db := memory.New()
-	service := NewOAuthService(db)
+	cfg := config.Load() // Need config for the service now
+	service := NewOAuthService(db, cfg)
 	ctx := context.Background()
 
 	provider := "google"

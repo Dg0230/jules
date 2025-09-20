@@ -87,12 +87,12 @@ func main() {
 	// 4. Init services
 	jwtService := auth.NewJWTService(cfg)
 	userService := user.NewUserService(db, nil) // Temporarily passing nil for smsService
-	oauthService := oauth.NewOAuthService(db)
+	oauthService := oauth.NewOAuthService(db, cfg)
 	wechatService := wechat.NewWeChatService(cfg)
 
 	// 5. Init handlers
 	userHandler := handler.NewUserHandler(userService, jwtService)
-	oauthHandler := handler.NewOAuthHandler(cfg, oauthService, jwtService)
+	oauthHandler := handler.NewOAuthHandler(oauthService, jwtService)
 	wechatHandler := handler.NewWeChatHandler(wechatService, oauthService, jwtService, db)
 
 	// 6. Init Gin router
@@ -124,6 +124,7 @@ func main() {
 		api.GET("/login/wechat/status", wechatHandler.GetStatus)
 		api.POST("/oauth/wechat/callback", wechatHandler.Callback)
 	}
+
 	router.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "pong"})
 	})

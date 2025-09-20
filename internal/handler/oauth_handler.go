@@ -1,28 +1,19 @@
 package handler
 
 import (
-	"auth-service/internal/config"
 	"auth-service/internal/service/auth"
 	"auth-service/internal/service/oauth"
 	"context"
-	"crypto/rand"
-	"encoding/base64"
 	"encoding/json"
 	"io"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/ravener/discord-oauth2"
-	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/google"
 )
 
 type OAuthHandler struct {
-	cfg                *config.Config
-	oauthService       *oauth.OAuthService
-	jwtService         *auth.JWTService
-	googleOAuthConfig  *oauth2.Config
-	discordOAuthConfig *oauth2.Config
+	oauthService *oauth.OAuthService
+	jwtService   *auth.JWTService
 }
 
 type GoogleUserInfo struct {
@@ -35,36 +26,11 @@ type DiscordUserInfo struct {
 	Email string `json:"email"`
 }
 
-func NewOAuthHandler(cfg *config.Config, oauthService *oauth.OAuthService, jwtService *auth.JWTService) *OAuthHandler {
+func NewOAuthHandler(oauthService *oauth.OAuthService, jwtService *auth.JWTService) *OAuthHandler {
 	return &OAuthHandler{
-		cfg:          cfg,
 		oauthService: oauthService,
 		jwtService:   jwtService,
-		googleOAuthConfig: &oauth2.Config{
-			ClientID:     cfg.GoogleClientID,
-			ClientSecret: cfg.GoogleClientSecret,
-			RedirectURL:  cfg.GoogleRedirectURL,
-			Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"},
-			Endpoint:     google.Endpoint,
-		},
-		discordOAuthConfig: &oauth2.Config{
-			ClientID:     cfg.DiscordClientID,
-			ClientSecret: cfg.DiscordClientSecret,
-			RedirectURL:  cfg.DiscordRedirectURL,
-			Scopes:       []string{discord.ScopeIdentify, discord.ScopeEmail},
-			Endpoint:     discord.Endpoint,
-		},
 	}
-}
-
-// generateOauthState is used to prevent CSRF attacks.
-func generateOauthState() (string, error) {
-	b := make([]byte, 16)
-	_, err := rand.Read(b)
-	if err != nil {
-		return "", err
-	}
-	return base64.URLEncoding.EncodeToString(b), nil
 }
 
 // GoogleLogin godoc
@@ -74,13 +40,13 @@ func generateOauthState() (string, error) {
 // @Success      307
 // @Router       /login/google [get]
 func (h *OAuthHandler) GoogleLogin(c *gin.Context) {
-	state, err := generateOauthState()
+	state, err := oauth.GenerateOauthState()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate state"})
 		return
 	}
 	c.SetCookie("oauthstate", state, 3600, "/", "", false, true)
-	url := h.googleOAuthConfig.AuthCodeURL(state)
+	url := h.oauthService.GoogleOAuthConfig.AuthCodeURL(state)
 	c.Redirect(http.StatusTemporaryRedirect, url)
 }
 
@@ -101,7 +67,7 @@ func (h *OAuthHandler) GoogleCallback(c *gin.Context) {
 	}
 
 	code := c.Query("code")
-	token, err := h.googleOAuthConfig.Exchange(context.Background(), code)
+	token, err := h.oauthService.GoogleOAuthConfig.Exchange(context.Background(), code)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to exchange token"})
 		return
@@ -147,13 +113,13 @@ func (h *OAuthHandler) GoogleCallback(c *gin.Context) {
 // @Success      307
 // @Router       /login/discord [get]
 func (h *OAuthHandler) DiscordLogin(c *gin.Context) {
-	state, err := generateOauthState()
+	state, err := oauth.GenerateOauthState()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate state"})
 		return
 	}
 	c.SetCookie("oauthstate", state, 3600, "/", "", false, true)
-	url := h.discordOAuthConfig.AuthCodeURL(state)
+	url := h.oauthService.DiscordOAuthConfig.AuthCodeURL(state)
 	c.Redirect(http.StatusTemporaryRedirect, url)
 }
 
@@ -174,7 +140,7 @@ func (h *OAuthHandler) DiscordCallback(c *gin.Context) {
 	}
 
 	code := c.Query("code")
-	token, err := h.discordOAuthConfig.Exchange(context.Background(), code)
+	token, err := h.oauthService.DiscordOAuthConfig.Exchange(context.Background(), code)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to exchange token"})
 		return

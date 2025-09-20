@@ -127,12 +127,35 @@ func (s *UserService) VerifyOTP(ctx context.Context, identifier, code string) (*
 		slog.Info("user login successful", "user_id", user.ID, "provider", provider)
 		return user, nil
 	}
-
 	if err != storage.ErrIdentityNotFound {
-		slog.Error("otp verification failed: storage error", "identifier", identifier, "error", err)
+		slog.Error("otp verification failed: storage error on find identity", "identifier", identifier, "error", err)
 		return nil, err
 	}
 
+	// If it's an email, check if user exists with another provider.
+	if provider == "email" {
+		existingUser, err := s.db.FindUserByEmail(ctx, identifier)
+		if err == nil {
+			slog.Info("linking new otp identity to existing user", "user_id", existingUser.ID, "email", identifier)
+			newIdentity := &domain.Identity{
+				ID:         uuid.New(),
+				UserID:     existingUser.ID,
+				Provider:   provider,
+				ProviderID: identifier,
+				CreatedAt:  time.Now(),
+				UpdatedAt:  time.Now(),
+			}
+			if err := s.db.CreateIdentity(ctx, newIdentity); err != nil {
+				return nil, err
+			}
+			return existingUser, nil
+		}
+		if err != storage.ErrUserNotFound {
+			return nil, err // A different storage error occurred
+		}
+	}
+
+	// No user found, create a new one.
 	newUser := &domain.User{ID: uuid.New(), CreatedAt: time.Now(), UpdatedAt: time.Now()}
 	if err := s.db.CreateUser(ctx, newUser); err != nil {
 		return nil, err

@@ -49,6 +49,23 @@ func (p *PostgresStorage) CreateUser(ctx context.Context, user *domain.User) err
 	return nil
 }
 
+func (p *PostgresStorage) FindUserByEmail(ctx context.Context, email string) (*domain.User, error) {
+	query := `
+		SELECT u.id, u.created_at, u.updated_at
+		FROM users u
+		JOIN identities i ON u.id = i.user_id
+		WHERE i.provider_id = $1`
+	user := &domain.User{}
+	err := p.pool.QueryRow(ctx, query, email).Scan(&user.ID, &user.CreatedAt, &user.UpdatedAt)
+	if err != nil {
+		if err == pgx.ErrNoRows {
+			return nil, storage.ErrUserNotFound
+		}
+		return nil, fmt.Errorf("failed to find user by email: %w", err)
+	}
+	return user, nil
+}
+
 func (p *PostgresStorage) FindUserByID(ctx context.Context, id uuid.UUID) (*domain.User, error) {
 	query := `SELECT id, created_at, updated_at FROM users WHERE id = $1`
 	user := &domain.User{}
