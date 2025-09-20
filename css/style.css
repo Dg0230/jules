@@ -1,0 +1,661 @@
+/* General Body Styles */
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    margin: 0;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Container for centered content */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Styles */
+.site-header {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 15px 0;
+}
+
+.site-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Baloo 2', cursive;
+    font-size: 28px;
+    font-weight: 700;
+    color: #4CAF50; /* Green from the screenshot */
+}
+
+/* Navigation Styles */
+.nav-link {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 700;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #4CAF50;
+}
+
+/* User Profile Styles */
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-profile span {
+    font-size: 24px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ddd; /* Placeholder color */
+    border: 2px solid #fff;
+}
+
+/* Main Content Styles */
+main {
+    padding: 40px 0;
+}
+
+main h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 36px;
+    color: #333;
+}
+
+/* Footer Styles */
+.site-footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+/* Unit Path Section */
+.unit-path {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    margin-top: 30px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.path-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.path-header h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.path-header span {
+    font-size: 14px;
+    color: #777;
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+/* Unit Grid Layout */
+.unit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 25px;
+}
+
+/* Unit Card Styles */
+.unit-card {
+    background-color: #fafafa;
+    border-radius: 10px;
+    text-align: center;
+    padding: 15px;
+    border: 2px solid #eee;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+}
+
+.unit-card:not(.disabled):hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    border-color: #4CAF50;
+}
+
+.unit-card .card-image {
+    height: 120px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-unit-number {
+    font-family: 'Baloo 2', cursive;
+    font-size: 48px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.15);
+}
+
+.unit-card h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.status-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+}
+
+/* Disabled State */
+.unit-card.disabled {
+    filter: grayscale(80%);
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.unit-card.disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+a.unit-card {
+    cursor: pointer;
+}
+
+/* Unit Page Specific Styles */
+.unit-header-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.back-link {
+    text-decoration: none;
+    color: #555;
+    font-weight: 700;
+    background-color: #eee;
+    padding: 8px 15px;
+    border-radius: 20px;
+    transition: background-color 0.2s;
+}
+
+.back-link:hover {
+    background-color: #ddd;
+}
+
+.unit-title-card {
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.unit-title-card h1 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-family: 'Baloo 2', cursive;
+}
+
+.unit-title-card p {
+    margin: 0;
+    font-size: 18px;
+}
+
+/* Learning Section Styles */
+.learning-section {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.learning-section h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #4CAF50;
+    font-family: 'Baloo 2', cursive;
+}
+
+/* Vocabulary Card Styles */
+.vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.vocab-card {
+    background: linear-gradient(135deg, #f9f9f9, #e9e9e9);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.vocab-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.vocab-card .vocab-en {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.vocab-card .vocab-cn {
+    display: block;
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.vocab-card .audio-icon {
+    font-size: 20px;
+    color: #4CAF50;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.vocab-card:hover .audio-icon {
+    opacity: 1;
+}
+
+@keyframes pulse {
+    0% {
+        transform: translateY(-5px) scale(1);
+    }
+    50% {
+        transform: translateY(-5px) scale(1.05);
+        border-color: #4CAF50;
+    }
+    100% {
+        transform: translateY(-5px) scale(1);
+    }
+}
+
+.vocab-card.playing {
+    animation: pulse 0.3s ease-in-out;
+}
+
+/* Dialogue/Chat Bubble Styles */
+.dialogue-container {
+    padding: 20px;
+    background-color: #f7f9fc;
+    border-radius: 8px;
+}
+
+.chat-bubble-wrapper {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 15px;
+}
+
+.avatar-placeholder {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 20px;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.avatar-placeholder.john {
+    background-color: #3498db;
+}
+
+.avatar-placeholder.grandpa {
+    background-color: #2ecc71;
+}
+
+.avatar-placeholder.generic-a {
+    background-color: #9b59b6; /* Amethyst */
+}
+
+.avatar-placeholder.generic-b {
+    background-color: #e67e22; /* Carrot */
+}
+
+.avatar-placeholder.zhang-peng {
+    background-color: #f1c40f; /* Sun Flower */
+}
+
+.avatar-placeholder.sarah {
+    background-color: #e74c3c; /* Alizarin */
+}
+
+.chat-bubble {
+    max-width: 70%;
+    padding: 12px 18px;
+    border-radius: 20px;
+    position: relative;
+    line-height: 1.5;
+}
+
+.chat-bubble strong {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Sender (John) */
+.chat-bubble-wrapper.sender {
+    justify-content: flex-start;
+}
+
+.chat-bubble-wrapper.sender .avatar-placeholder {
+    margin-right: 12px;
+}
+
+.chat-bubble-wrapper.sender .chat-bubble {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-top-left-radius: 5px;
+}
+
+/* Receiver (Grandpa) */
+.chat-bubble-wrapper.receiver {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.chat-bubble-wrapper.receiver .avatar-placeholder {
+    order: 2;
+    margin-left: 12px;
+}
+
+.chat-bubble-wrapper.receiver .chat-bubble {
+    background-color: #dcf8c6;
+    border-top-right-radius: 5px;
+    text-align: left;
+}
+
+/* General Exercise Styles */
+.exercise-container {
+    padding: 20px;
+    background-color: #f7f9fc;
+    border: 1px solid #e1e8ed;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+/* Spelling Exercise Styles */
+#spell-exercise .sentence {
+    font-size: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.spell-input {
+    width: 40px;
+    height: 30px;
+    font-size: 20px;
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    margin: 0 5px;
+    font-family: monospace;
+    text-transform: lowercase;
+    transition: border-color 0.3s;
+}
+
+.spell-input:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+.spell-input.correct {
+    border-color: #28a745;
+    background-color: #e9f7ef;
+}
+
+.spell-input.incorrect {
+    border-color: #dc3545;
+    background-color: #f8d7da;
+}
+
+/* Tick-or-Cross Quiz Styles */
+.quiz-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.quiz-item:last-child {
+    border-bottom: none;
+}
+
+.quiz-item .question {
+    margin: 0;
+    font-size: 18px;
+    flex-grow: 1;
+}
+
+.choices {
+    display: flex;
+    gap: 10px;
+}
+
+.choice-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background-color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.choice-btn.tick {
+    color: #28a745;
+}
+
+.choice-btn.cross {
+    color: #dc3545;
+}
+
+.choice-btn.yes, .choice-btn.no {
+    font-size: 16px;
+    width: 65px;
+    height: 40px;
+    border-radius: 20px;
+}
+
+.choice-btn:hover:not(:disabled) {
+    transform: scale(1.1);
+    border-color: #888;
+}
+
+.choice-btn.selected.correct {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
+}
+
+.choice-btn.selected.incorrect {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+
+.quiz-item.answered .choice-btn:not(.selected) {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Drag and Drop Game Styles */
+.dnd-columns {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.dnd-column {
+    flex-basis: 45%;
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 8px;
+    min-height: 400px;
+}
+
+#dnd-enders {
+    background-color: #d6eaf8;
+}
+
+.dnd-starter {
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.dnd-draggable {
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border: 2px solid #3498db;
+    border-radius: 6px;
+    font-size: 18px;
+    text-align: center;
+    cursor: grab;
+}
+
+.dnd-draggable.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+.dnd-starter.drag-over {
+    background-color: #dcf8c6;
+    border-color: #4CAF50;
+}
+
+.dnd-starter.correct {
+    background-color: #e9f7ef;
+    border-color: #28a745;
+    color: #28a745;
+    font-weight: bold;
+}
+
+.dnd-starter.correct .drop-part {
+    visibility: hidden;
+}
+
+.drop-part {
+    color: #aaa;
+}
+
+#dnd-feedback {
+    margin-top: 15px;
+    font-weight: bold;
+    min-height: 24px;
+    text-align: center;
+    font-size: 18px;
+    color: #4CAF50;
+}
+
+/* Story Time Panel Styles */
+.story-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.story-panel {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.panel-img-placeholder {
+    height: 180px;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: bold;
+    color: #ced4da;
+}
+
+.story-panel .caption {
+    padding: 15px;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}

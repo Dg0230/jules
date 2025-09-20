@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduKids - 在线学习</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Baloo+2:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">EduKids</div>
+            <nav>
+                <a href="#" class="nav-link active">课程 (Lessons)</a>
+                <a href="#" class="nav-link">游戏 (Games)</a>
+                <a href="#" class="nav-link">图书馆 (Library)</a>
+            </nav>
+            <div class="user-profile">
+                <span>🔔</span>
+                <img src="images/avatar.png" alt="User Avatar" class="avatar">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>我的课程</h1>
+
+            <!-- Unit Selection Section -->
+            <section class="unit-path">
+                <div class="path-header">
+                    <h2>花园奖励路线 (Garden Reward Path)</h2>
+                    <span>已完成 0/10 单元</span>
+                </div>
+                <div class="unit-grid">
+                    <!-- Unit 1: Placeholder (Locked) -->
+                    <div class="unit-card disabled">
+                        <div class="card-image" style="background-color: #f0e4d7;">
+                            <span class="card-unit-number">U1</span>
+                        </div>
+                        <h3>Unit 1: Greetings</h3>
+                        <div class="status-icon">🔒</div>
+                    </div>
+                    <!-- Unit 2: My Week (Active) -->
+                    <a href="unit2.html" class="unit-card">
+                        <div class="card-image" style="background-color: #e8f5e9;">
+                            <span class="card-unit-number">U2</span>
+                        </div>
+                        <h3>Unit 2: My week</h3>
+                        <div class="status-icon">▶️</div>
+                    </a>
+                    <!-- More placeholders (Locked) -->
+                    <div class="unit-card disabled">
+                        <div class="card-image" style="background-color: #e1f5fe;">
+                            <span class="card-unit-number">U3</span>
+                        </div>
+                        <h3>Unit 3: Colors</h3>
+                        <div class="status-icon">🔒</div>
+                    </div>
+                    <div class="unit-card disabled">
+                        <div class="card-image" style="background-color: #fce4ec;">
+                            <span class="card-unit-number">U4</span>
+                        </div>
+                        <h3>Unit 4: Numbers</h3>
+                        <div class="status-icon">🔒</div>
+                    </div>
+                    <div class="unit-card disabled">
+                        <div class="card-image" style="background-color: #fffde7;">
+                            <span class="card-unit-number">U5</span>
+                        </div>
+                        <h3>Unit 5: Animals</h3>
+                        <div class="status-icon">🔒</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2024 EduKids. 保留所有权利。</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

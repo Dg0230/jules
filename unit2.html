@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduKids - 在线学习</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Baloo+2:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">EduKids</div>
+            <nav>
+                <a href="#" class="nav-link active">课程 (Lessons)</a>
+                <a href="#" class="nav-link">游戏 (Games)</a>
+                <a href="#" class="nav-link">图书馆 (Library)</a>
+            </nav>
+            <div class="user-profile">
+                <span>🔔</span>
+                <img src="images/avatar.png" alt="User Avatar" class="avatar">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="unit-header-bar">
+                <a href="index.html" class="back-link">← 返回课程列表</a>
+            </div>
+            <div class="unit-title-card" style="background-color: #e8f5e9;">
+                <h1>Unit 2: My week</h1>
+                <p>学习一周七天、学校课程以及如何讨论你的时间安排。</p>
+            </div>
+
+            <!-- 1. 开篇 -->
+            <section id="part1" class="learning-section">
+                <h2>第一部分：开篇</h2>
+                <p>让我们通过一段对话来开始本周的学习！</p>
+                <div class="dialogue-container">
+                    <div class="chat-bubble-wrapper sender">
+                        <div class="avatar-placeholder generic-a">A</div>
+                        <div class="chat-bubble">
+                            <strong>问:</strong> What do you have on Fridays?
+                        </div>
+                    </div>
+                    <div class="chat-bubble-wrapper receiver">
+                        <div class="avatar-placeholder generic-b">B</div>
+                        <div class="chat-bubble">
+                            <strong>答:</strong> I have a PE class.
+                        </div>
+                    </div>
+                    <div class="chat-bubble-wrapper sender">
+                        <div class="avatar-placeholder generic-a">A</div>
+                        <div class="chat-bubble">
+                            <strong>问:</strong> Do you often play sports?
+                        </div>
+                    </div>
+                    <div class="chat-bubble-wrapper receiver">
+                        <div class="avatar-placeholder generic-b">B</div>
+                        <div class="chat-bubble">
+                            <strong>答:</strong> No, I don't. I don't like sports.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. Let's try & Let's talk -->
+            <section id="part2" class="learning-section">
+                <h2>第二部分：Let's try & Let's talk</h2>
+                <div class="dialogue-container">
+                    <div class="chat-bubble-wrapper sender">
+                        <div class="avatar-placeholder john">J</div>
+                        <div class="chat-bubble">
+                            <strong>John:</strong> Grandpa! Look at my picture.
+                        </div>
+                    </div>
+                    <div class="chat-bubble-wrapper receiver">
+                        <div class="avatar-placeholder grandpa">G</div>
+                        <div class="chat-bubble">
+                            <strong>Grandfather:</strong> Great! What do you have on Thursdays?
+                        </div>
+                    </div>
+                    <div class="chat-bubble-wrapper sender">
+                        <div class="avatar-placeholder john">J</div>
+                        <div class="chat-bubble">
+                            <strong>John:</strong> I have maths, English and music.
+                        </div>
+                    </div>
+                     <div class="chat-bubble-wrapper receiver">
+                        <div class="avatar-placeholder grandpa">G</div>
+                        <div class="chat-bubble">
+                           <strong>Grandfather:</strong> Oh, I love music! Who's your music teacher?
+                        </div>
+                    </div>
+                     <div class="chat-bubble-wrapper sender">
+                        <div class="avatar-placeholder john">J</div>
+                        <div class="chat-bubble">
+                            <strong>John:</strong> Mr Young.
+                        </div>
+                    </div>
+                     <div class="chat-bubble-wrapper receiver">
+                        <div class="avatar-placeholder grandpa">G</div>
+                        <div class="chat-bubble">
+                            <strong>Grandfather:</strong> Is he strict?
+                        </div>
+                    </div>
+                    <div class="chat-bubble-wrapper sender">
+                        <div class="avatar-placeholder john">J</div>
+                        <div class="chat-bubble">
+                           <strong>John:</strong> No. He's funny. What do you do on Thursdays, Grandpa?
+                        </div>
+                    </div>
+                    <div class="chat-bubble-wrapper receiver">
+                        <div class="avatar-placeholder grandpa">G</div>
+                        <div class="chat-bubble">
+                            <strong>Grandfather:</strong> Oh, I have a cooking class with your grandma!
+                        </div>
+                    </div>
+                    <div class="chat-bubble-wrapper sender">
+                        <div class="avatar-placeholder john">J</div>
+                        <div class="chat-bubble">
+                            <strong>John:</strong> Haha!
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Let's learn -->
+            <section id="part3" class="learning-section">
+                <h2>第三部分：Let's learn</h2>
+                <p>点击下方的卡片，学习课程名称的发音！</p>
+                <div class="vocab-grid">
+                    <div class="vocab-card" data-audio-src="sounds/chinese.mp3">
+                        <span class="vocab-en">Chinese</span>
+                        <span class="vocab-cn">语文</span>
+                        <span class="audio-icon">🔊</span>
+                    </div>
+                    <div class="vocab-card" data-audio-src="sounds/maths.mp3">
+                        <span class="vocab-en">maths</span>
+                        <span class="vocab-cn">数学</span>
+                        <span class="audio-icon">🔊</span>
+                    </div>
+                    <div class="vocab-card" data-audio-src="sounds/english.mp3">
+                        <span class="vocab-en">English</span>
+                        <span class="vocab-cn">英语</span>
+                        <span class="audio-icon">🔊</span>
+                    </div>
+                    <div class="vocab-card" data-audio-src="sounds/science.mp3">
+                        <span class="vocab-en">science</span>
+                        <span class="vocab-cn">科学</span>
+                        <span class="audio-icon">🔊</span>
+                    </div>
+                    <div class="vocab-card" data-audio-src="sounds/art.mp3">
+                        <span class="vocab-en">art</span>
+                        <span class="vocab-cn">美术</span>
+                        <span class="audio-icon">🔊</span>
+                    </div>
+                    <div class="vocab-card" data-audio-src="sounds/music.mp3">
+                        <span class="vocab-en">music</span>
+                        <span class="vocab-cn">音乐</span>
+                        <span class="audio-icon">🔊</span>
+                    </div>
+                    <div class="vocab-card" data-audio-src="sounds/pe.mp3">
+                        <span class="vocab-en">PE</span>
+                        <span class="vocab-cn">体育</span>
+                        <span class="audio-icon">🔊</span>
+                    </div>
+                    <div class="vocab-card" data-audio-src="sounds/computer.mp3">
+                        <span class="vocab-en">computer class</span>
+                        <span class="vocab-cn">计算机课</span>
+                        <span class="audio-icon">🔊</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Let's spell -->
+            <section id="part4" class="learning-section">
+                <h2>第四部分：Let's spell</h2>
+                <p>听句子，并填入单词中缺失的字母 <strong>ee</strong> 或 <strong>ea</strong>。</p>
+                <div id="spell-exercise" class="exercise-container">
+                    <div class="sentence">
+                        <span>1. I like to r</span>
+                        <input type="text" class="spell-input" maxlength="2" data-answer="ea">
+                        <span>d by the sea.</span>
+                    </div>
+                    <div class="sentence">
+                        <span>2. Have some t</span>
+                        <input type="text" class="spell-input" maxlength="2" data-answer="ea">
+                        <span> and b</span>
+                        <input type="text" class="spell-input" maxlength="2" data-answer="ee">
+                        <span>f.</span>
+                    </div>
+                    <div class="sentence">
+                        <span>3. M</span>
+                        <input type="text" class="spell-input" maxlength="2" data-answer="ee">
+                        <span>t the baby.</span>
+                    </div>
+                    <button id="check-spell-btn" class="btn">检查答案</button>
+                </div>
+            </section>
+
+            <!-- 5. Part B Let's try & Let's talk -->
+            <section id="part5" class="learning-section">
+                <h2>第五部分：Let's try & Let's talk (Part B)</h2>
+                <p>听一段公园里的对话，注意他们谈论的周末活动。</p>
+                <div class="dialogue-container">
+                    <div class="chat-bubble-wrapper sender">
+                        <div class="avatar-placeholder zhang-peng">ZP</div>
+                        <div class="chat-bubble">
+                            <strong>张鹏:</strong> Hi, Sarah. What's that?
+                        </div>
+                    </div>
+                    <div class="chat-bubble-wrapper receiver">
+                        <div class="avatar-placeholder sarah">S</div>
+                        <div class="chat-bubble">
+                            <strong>Sarah:</strong> It's a storybook.
+                        </div>
+                    </div>
+                    <div class="chat-bubble-wrapper sender">
+                        <div class="avatar-placeholder zhang-peng">ZP</div>
+                        <div class="chat-bubble">
+                            <strong>张鹏:</strong> Do you often read books in this park?
+                        </div>
+                    </div>
+                    <div class="chat-bubble-wrapper receiver">
+                        <div class="avatar-placeholder sarah">S</div>
+                        <div class="chat-bubble">
+                            <strong>Sarah:</strong> No, I don't. Do you often play football here?
+                        </div>
+                    </div>
+                    <div class="chat-bubble-wrapper sender">
+                        <div class="avatar-placeholder zhang-peng">ZP</div>
+                        <div class="chat-bubble">
+                            <strong>张鹏:</strong> Yes, I do. I like this park very much.
+                        </div>
+                    </div>
+                    <div class="chat-bubble-wrapper receiver">
+                        <div class="avatar-placeholder sarah">S</div>
+                        <div class="chat-bubble">
+                            <strong>Sarah:</strong> Me too.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. Part B Let's learn -->
+            <section id="part6" class="learning-section">
+                <h2>第六部分：Let's learn (Part B)</h2>
+                <p>学习描述周末活动的常用短语。</p>
+                <div class="vocab-grid">
+                    <div class="vocab-card" data-audio-src="sounds/wash_clothes.mp3">
+                        <span class="vocab-en">wash my clothes</span>
+                        <span class="vocab-cn">洗衣服</span>
+                        <span class="audio-icon">🔊</span>
+                    </div>
+                    <div class="vocab-card" data-audio-src="sounds/watch_tv.mp3">
+                        <span class="vocab-en">watch TV</span>
+                        <span class="vocab-cn">看电视</span>
+                        <span class="audio-icon">🔊</span>
+                    </div>
+                    <div class="vocab-card" data-audio-src="sounds/do_homework.mp3">
+                        <span class="vocab-en">do homework</span>
+                        <span class="vocab-cn">做作业</span>
+                        <span class="audio-icon">🔊</span>
+                    </div>
+                    <div class="vocab-card" data-audio-src="sounds/read_books.mp3">
+                        <span class="vocab-en">read books</span>
+                        <span class="vocab-cn">读书</span>
+                        <span class="audio-icon">🔊</span>
+                    </div>
+                    <div class="vocab-card" data-audio-src="sounds/play_football.mp3">
+                        <span class="vocab-en">play football</span>
+                        <span class="vocab-cn">踢足球</span>
+                        <span class="audio-icon">🔊</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. Read and write -->
+            <section id="part7" class="learning-section">
+                <h2>第七部分：Read and write</h2>
+                <p>根据故事内容，判断下列句子是否正确。</p>
+                <div id="tick-cross-quiz" class="exercise-container">
+                    <div class="quiz-item" data-correct="tick">
+                        <p class="question">1. Wu Binbin often watches TV on the weekend.</p>
+                        <div class="choices">
+                            <button class="choice-btn tick">✓</button>
+                            <button class="choice-btn cross">✗</button>
+                        </div>
+                    </div>
+                    <div class="quiz-item" data-correct="tick">
+                        <p class="question">2. Wu Binbin often reads books on the weekend.</p>
+                        <div class="choices">
+                            <button class="choice-btn tick">✓</button>
+                            <button class="choice-btn cross">✗</button>
+                        </div>
+                    </div>
+                    <div class="quiz-item" data-correct="cross">
+                        <p class="question">3. Wu Binbin likes sports.</p>
+                        <div class="choices">
+                            <button class="choice-btn tick">✓</button>
+                            <button class="choice-btn cross">✗</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. Let's check -->
+            <section id="part8" class="learning-section">
+                <h2>第八部分：Let's check</h2>
+                <h3>Listen and number (听力练习)</h3>
+                <p><em>这是一个听力练习，请在老师的指导下完成。</em></p>
+
+                <h3 style="margin-top: 30px;">Read and circle (阅读并圈出)</h3>
+                <div id="yes-no-quiz" class="exercise-container">
+                    <div class="quiz-item" data-correct="yes">
+                        <p class="question">1. Do you read books on the weekend?</p>
+                        <div class="choices">
+                            <button class="choice-btn yes">Yes</button>
+                            <button class="choice-btn no">No</button>
+                        </div>
+                    </div>
+                    <div class="quiz-item" data-correct="yes">
+                        <p class="question">2. Do you watch TV on the weekend?</p>
+                        <div class="choices">
+                            <button class="choice-btn yes">Yes</button>
+                            <button class="choice-btn no">No</button>
+                        </div>
+                    </div>
+                    <div class="quiz-item" data-correct="yes">
+                        <p class="question">3. Do you wash your clothes on the weekend?</p>
+                        <div class="choices">
+                            <button class="choice-btn yes">Yes</button>
+                            <button class="choice-btn no">No</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. Let's wrap it up -->
+            <section id="part9" class="learning-section">
+                <h2>第九部分：Let's wrap it up</h2>
+                <p>将右边的词尾拖到左边正确的词根上，组成一个完整的单词！</p>
+                <div id="dnd-game" class="exercise-container">
+                    <div class="dnd-columns">
+                        <div class="dnd-column" id="dnd-starters">
+                            <!-- Drop targets will be populated by JS -->
+                        </div>
+                        <div class="dnd-column" id="dnd-enders">
+                            <!-- Draggable items will be populated by JS -->
+                        </div>
+                    </div>
+                    <p id="dnd-feedback"></p>
+                </div>
+            </section>
+
+            <!-- 10. Story time -->
+            <section id="part10" class="learning-section">
+                <h2>第十部分：Story time</h2>
+                <p>阅读下面的小故事，学习如何合理规划购物。</p>
+                <div class="story-grid">
+                    <div class="story-panel">
+                        <div class="panel-img-placeholder">1</div>
+                        <p class="caption"><strong>Zoom:</strong> "It's a new school year. I need to do some shopping."<br><strong>Zip:</strong> "I'll help."</p>
+                    </div>
+                    <div class="story-panel">
+                        <div class="panel-img-placeholder">2</div>
+                        <p class="caption"><strong>Zip:</strong> "We have English on Mondays and Wednesdays."<br><strong>Zoom:</strong> "I need some notebooks and pencils."</p>
+                    </div>
+                    <div class="story-panel">
+                        <div class="panel-img-placeholder">3</div>
+                        <p class="caption"><strong>Zip:</strong> "We have maths on Tuesdays."<br><strong>Zoom:</strong> "I need a ruler."</p>
+                    </div>
+                    <div class="story-panel">
+                        <div class="panel-img-placeholder">4</div>
+                        <p class="caption"><strong>Zip:</strong> "On Thursdays, we have art."<br><strong>Zoom:</strong> "I need a box of crayons."</p>
+                    </div>
+                    <div class="story-panel">
+                        <div class="panel-img-placeholder">5</div>
+                        <p class="caption"><strong>Zip:</strong> "We have PE on Fridays."<br><strong>Zoom:</strong> "I want a new football, please. We can play with it on the weekend."</p>
+                    </div>
+                    <div class="story-panel">
+                        <div class="panel-img-placeholder">6</div>
+                        <p class="caption"><strong>Zip:</strong> "I'm sorry, Zoom. We don't have enough money. I'll put back the football."<br><strong>Zoom:</strong> "Oh, no!"</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2024 EduKids. 保留所有权利。</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
