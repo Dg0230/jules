@@ -35,10 +35,19 @@ func NewWeChatHandler(
 	}
 }
 
-// GetQRCode handles the request to start a WeChat QR code login.
+// GetQRCode godoc
+// @Summary Get WeChat QR Code
+// @Description Starts the WeChat QR code login flow by providing a session ID and a URL for the QR code.
+// @Tags wechat
+// @Produce  json
+// @Success 200 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /login/wechat/qrcode [get]
 func (h *WeChatHandler) GetQRCode(c *gin.Context) {
 	sessionID := uuid.New().String()
 
+	// In a real app, this service would make a live call to WeChat.
+	// Here it uses a mock for stability in this environment.
 	ticket, err := h.wechatService.GetQRCodeTicket(c.Request.Context(), sessionID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get QR code ticket from WeChat"})
@@ -63,7 +72,16 @@ func (h *WeChatHandler) GetQRCode(c *gin.Context) {
 	})
 }
 
-// GetStatus handles the frontend polling to check the login status.
+// GetStatus godoc
+// @Summary Poll for WeChat Login Status
+// @Description Called by the frontend to poll for the status of a login session.
+// @Tags wechat
+// @Produce  json
+// @Param session_id query string true "Session ID"
+// @Success 200 {object} map[string]string "Returns status and token if authorized"
+// @Failure 400 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Router /login/wechat/status [get]
 func (h *WeChatHandler) GetStatus(c *gin.Context) {
 	sessionID := c.Query("session_id")
 	if sessionID == "" {
@@ -91,7 +109,18 @@ type WeChatCallbackRequest struct {
 	// In a real scenario, WeChat sends more, but we'll simulate with these.
 }
 
-// Callback handles the callback from WeChat's servers.
+// Callback godoc
+// @Summary WeChat OAuth Callback
+// @Description [INTERNAL] Callback endpoint for WeChat servers. Not for public use.
+// @Tags wechat
+// @Accept  json
+// @Produce  json
+// @Param   request body WeChatCallbackRequest true "Simulated WeChat Callback"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /oauth/wechat/callback [post]
 func (h *WeChatHandler) Callback(c *gin.Context) {
 	var req WeChatCallbackRequest
 	// In reality, this would be an XML payload from WeChat, not JSON.

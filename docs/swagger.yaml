@@ -1,0 +1,397 @@
+basePath: /api
+definitions:
+  handler.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  handler.OTPRequest:
+    properties:
+      identifier:
+        type: string
+    required:
+    - identifier
+    type: object
+  handler.OTPVerifyRequest:
+    properties:
+      code:
+        type: string
+      identifier:
+        type: string
+    required:
+    - code
+    - identifier
+    type: object
+  handler.RegisterRequest:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 8
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  handler.WeChatCallbackRequest:
+    properties:
+      code:
+        type: string
+      ticket:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a unified login service with support for multiple authentication
+    methods.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Unified Login Service API
+  version: "1.0"
+paths:
+  /login/discord:
+    get:
+      description: Redirects the user to Discord's consent page to initiate OAuth2
+        login.
+      responses:
+        "307":
+          description: Temporary Redirect
+      summary: Login with Discord
+      tags:
+      - oauth
+  /login/google:
+    get:
+      description: Redirects the user to Google's consent page to initiate OAuth2
+        login.
+      responses:
+        "307":
+          description: Temporary Redirect
+      summary: Login with Google
+      tags:
+      - oauth
+  /login/otp/request:
+    post:
+      consumes:
+      - application/json
+      description: Request a one-time password for email or phone number.
+      parameters:
+      - description: Identifier (Email or Phone)
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handler.OTPRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Request an OTP
+      tags:
+      - auth
+  /login/otp/verify:
+    post:
+      consumes:
+      - application/json
+      description: Verify a one-time password and receive a JWT upon success.
+      parameters:
+      - description: Identifier and OTP Code
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handler.OTPVerifyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Verify an OTP
+      tags:
+      - auth
+  /login/password:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate a user with their email and password.
+      parameters:
+      - description: User Credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handler.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Login with email and password
+      tags:
+      - auth
+  /login/wechat/qrcode:
+    get:
+      description: Starts the WeChat QR code login flow by providing a session ID
+        and a URL for the QR code.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get WeChat QR Code
+      tags:
+      - wechat
+  /login/wechat/status:
+    get:
+      description: Called by the frontend to poll for the status of a login session.
+      parameters:
+      - description: Session ID
+        in: query
+        name: session_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Returns status and token if authorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Poll for WeChat Login Status
+      tags:
+      - wechat
+  /oauth/discord/callback:
+    get:
+      description: Handles the callback from Discord after user authorization.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Returns a JWT token
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Discord OAuth2 Callback
+      tags:
+      - oauth
+  /oauth/google/callback:
+    get:
+      description: Handles the callback from Google after user authorization.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Returns a JWT token
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Google OAuth2 Callback
+      tags:
+      - oauth
+  /oauth/wechat/callback:
+    post:
+      consumes:
+      - application/json
+      description: '[INTERNAL] Callback endpoint for WeChat servers. Not for public
+        use.'
+      parameters:
+      - description: Simulated WeChat Callback
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handler.WeChatCallbackRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: WeChat OAuth Callback
+      tags:
+      - wechat
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user with an email and password.
+      parameters:
+      - description: New User Details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handler.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "409":
+          description: Conflict
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Register a new user
+      tags:
+      - auth
+swagger: "2.0"

@@ -28,7 +28,7 @@ type RegisterRequest struct {
 }
 
 type LoginRequest struct {
-	Email    string `json:"email" binding:"required"`
+	Email    string `json:"email" binding:"required,email"`
 	Password string `json:"password" binding:"required"`
 }
 
@@ -41,6 +41,17 @@ type OTPVerifyRequest struct {
 	Code       string `json:"code" binding:"required,len=6"`
 }
 
+// RequestOTP godoc
+// @Summary Request an OTP
+// @Description Request a one-time password for email or phone number.
+// @Tags auth
+// @Accept  json
+// @Produce  json
+// @Param   request body OTPRequest true "Identifier (Email or Phone)"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /login/otp/request [post]
 func (h *UserHandler) RequestOTP(c *gin.Context) {
 	var req OTPRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -57,6 +68,18 @@ func (h *UserHandler) RequestOTP(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "OTP sent", "otp_for_testing": code})
 }
 
+// VerifyOTP godoc
+// @Summary Verify an OTP
+// @Description Verify a one-time password and receive a JWT upon success.
+// @Tags auth
+// @Accept  json
+// @Produce  json
+// @Param   request body OTPVerifyRequest true "Identifier and OTP Code"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /login/otp/verify [post]
 func (h *UserHandler) VerifyOTP(c *gin.Context) {
 	var req OTPVerifyRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -79,6 +102,18 @@ func (h *UserHandler) VerifyOTP(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"token": token})
 }
 
+// Login godoc
+// @Summary Login with email and password
+// @Description Authenticate a user with their email and password.
+// @Tags auth
+// @Accept  json
+// @Produce  json
+// @Param   request body LoginRequest true "User Credentials"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /login/password [post]
 func (h *UserHandler) Login(c *gin.Context) {
 	var req LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -101,6 +136,18 @@ func (h *UserHandler) Login(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"token": token})
 }
 
+// Register godoc
+// @Summary Register a new user
+// @Description Create a new user with an email and password.
+// @Tags auth
+// @Accept  json
+// @Produce  json
+// @Param   request body RegisterRequest true "New User Details"
+// @Success 201 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 409 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /register [post]
 func (h *UserHandler) Register(c *gin.Context) {
 	var req RegisterRequest
 	if err := c.ShouldBindJSON(&req); err != nil {

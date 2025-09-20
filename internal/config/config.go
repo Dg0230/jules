@@ -28,6 +28,8 @@ type Config struct {
 	SmsTemplateCode       string
 	// Database
 	PostgresDSN string
+	// Monitoring
+	SentryDSN string
 }
 
 // Load loads configuration from environment variables.
@@ -55,6 +57,8 @@ func Load() *Config {
 		SmsTemplateCode:       getEnv("ALIYUN_SMS_TEMPLATE_CODE", "SMS_12345678"),
 		// Database
 		PostgresDSN: getEnv("POSTGRES_DSN", "postgres://user:password@localhost:5432/authdb?sslmode=disable"),
+		// Monitoring
+		SentryDSN: getEnv("SENTRY_DSN", ""),
 	}
 }
 

@@ -18,11 +18,21 @@ import (
 )
 
 type OAuthHandler struct {
-	cfg           *config.Config
-	oauthService  *oauth.OAuthService
-	jwtService    *auth.JWTService
+	cfg                *config.Config
+	oauthService       *oauth.OAuthService
+	jwtService         *auth.JWTService
 	googleOAuthConfig  *oauth2.Config
 	discordOAuthConfig *oauth2.Config
+}
+
+type GoogleUserInfo struct {
+	ID    string `json:"id"`
+	Email string `json:"email"`
+}
+
+type DiscordUserInfo struct {
+	ID    string `json:"id"`
+	Email string `json:"email"`
 }
 
 func NewOAuthHandler(cfg *config.Config, oauthService *oauth.OAuthService, jwtService *auth.JWTService) *OAuthHandler {
@@ -41,7 +51,7 @@ func NewOAuthHandler(cfg *config.Config, oauthService *oauth.OAuthService, jwtSe
 			ClientID:     cfg.DiscordClientID,
 			ClientSecret: cfg.DiscordClientSecret,
 			RedirectURL:  cfg.DiscordRedirectURL,
-			Scopes:       []string{"identify", "email"},
+			Scopes:       []string{discord.ScopeIdentify, discord.ScopeEmail},
 			Endpoint:     discord.Endpoint,
 		},
 	}
@@ -57,26 +67,33 @@ func generateOauthState() (string, error) {
 	return base64.URLEncoding.EncodeToString(b), nil
 }
 
+// GoogleLogin godoc
+// @Summary      Login with Google
+// @Description  Redirects the user to Google's consent page to initiate OAuth2 login.
+// @Tags         oauth
+// @Success      307
+// @Router       /login/google [get]
 func (h *OAuthHandler) GoogleLogin(c *gin.Context) {
 	state, err := generateOauthState()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate state"})
 		return
 	}
-	// Store the state in a short-lived cookie
 	c.SetCookie("oauthstate", state, 3600, "/", "", false, true)
-
 	url := h.googleOAuthConfig.AuthCodeURL(state)
 	c.Redirect(http.StatusTemporaryRedirect, url)
 }
 
-type GoogleUserInfo struct {
-	ID    string `json:"id"`
-	Email string `json:"email"`
-}
-
+// GoogleCallback godoc
+// @Summary      Google OAuth2 Callback
+// @Description  Handles the callback from Google after user authorization.
+// @Tags         oauth
+// @Produce      json
+// @Success      200  {object}  map[string]string  "Returns a JWT token"
+// @Failure      400  {object}  map[string]string
+// @Failure      500  {object}  map[string]string
+// @Router       /oauth/google/callback [get]
 func (h *OAuthHandler) GoogleCallback(c *gin.Context) {
-	// Check state cookie
 	oauthState, _ := c.Cookie("oauthstate")
 	if c.Query("state") != oauthState {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid oauth state"})
@@ -90,7 +107,6 @@ func (h *OAuthHandler) GoogleCallback(c *gin.Context) {
 		return
 	}
 
-	// Get user info from Google
 	response, err := http.Get("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + token.AccessToken)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get user info"})
@@ -110,23 +126,26 @@ func (h *OAuthHandler) GoogleCallback(c *gin.Context) {
 		return
 	}
 
-	// Find or create the user in our system
 	user, err := h.oauthService.FindOrCreateUserFromProvider(c.Request.Context(), "google", userInfo.ID, userInfo.Email)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to process user from provider"})
 		return
 	}
 
-	// Issue our own JWT for the user
 	appToken, err := h.jwtService.GenerateToken(user.ID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate application token"})
 		return
 	}
-
 	c.JSON(http.StatusOK, gin.H{"token": appToken})
 }
 
+// DiscordLogin godoc
+// @Summary      Login with Discord
+// @Description  Redirects the user to Discord's consent page to initiate OAuth2 login.
+// @Tags         oauth
+// @Success      307
+// @Router       /login/discord [get]
 func (h *OAuthHandler) DiscordLogin(c *gin.Context) {
 	state, err := generateOauthState()
 	if err != nil {
@@ -138,11 +157,15 @@ func (h *OAuthHandler) DiscordLogin(c *gin.Context) {
 	c.Redirect(http.StatusTemporaryRedirect, url)
 }
 
-type DiscordUserInfo struct {
-	ID    string `json:"id"`
-	Email string `json:"email"`
-}
-
+// DiscordCallback godoc
+// @Summary      Discord OAuth2 Callback
+// @Description  Handles the callback from Discord after user authorization.
+// @Tags         oauth
+// @Produce      json
+// @Success      200  {object}  map[string]string  "Returns a JWT token"
+// @Failure      400  {object}  map[string]string
+// @Failure      500  {object}  map[string]string
+// @Router       /oauth/discord/callback [get]
 func (h *OAuthHandler) DiscordCallback(c *gin.Context) {
 	oauthState, _ := c.Cookie("oauthstate")
 	if c.Query("state") != oauthState {
@@ -157,7 +180,6 @@ func (h *OAuthHandler) DiscordCallback(c *gin.Context) {
 		return
 	}
 
-	// Get user info from Discord
 	req, err := http.NewRequest("GET", "https://discord.com/api/users/@me", nil)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create request to Discord"})
@@ -185,19 +207,16 @@ func (h *OAuthHandler) DiscordCallback(c *gin.Context) {
 		return
 	}
 
-	// Find or create the user in our system
 	user, err := h.oauthService.FindOrCreateUserFromProvider(c.Request.Context(), "discord", userInfo.ID, userInfo.Email)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to process user from provider"})
 		return
 	}
 
-	// Issue our own JWT for the user
 	appToken, err := h.jwtService.GenerateToken(user.ID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate application token"})
 		return
 	}
-
 	c.JSON(http.StatusOK, gin.H{"token": appToken})
 }
