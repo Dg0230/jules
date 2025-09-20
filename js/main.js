@@ -77,6 +77,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     initializeQuiz('#tick-cross-quiz');
     initializeQuiz('#yes-no-quiz');
+    initializeQuiz('#robin-quiz');
+    initializeQuiz('#y-sound-quiz');
 
     // --- Drag and Drop Game ---
     const dndGame = document.getElementById('dnd-game');

@@ -364,6 +364,43 @@ a.unit-card {
     background-color: #e74c3c; /* Alizarin */
 }
 
+.avatar-placeholder.teacher {
+    background-color: #1abc9c; /* Turquoise */
+}
+
+.avatar-placeholder.amy {
+    background-color: #e74c3c; /* Alizarin */
+}
+
+.avatar-placeholder.oliver {
+    background-color: #3498db; /* Peter River */
+}
+
+.avatar-placeholder.wu-binbin {
+    background-color: #f1c40f; /* Sun Flower */
+}
+
+.avatar-placeholder.chen-jie {
+    background-color: #e74c3c; /* Alizarin - Same as Amy/Sarah */
+}
+
+.avatar-placeholder.zip {
+    background-color: #e67e22; /* Carrot */
+}
+
+.avatar-placeholder.zoom {
+    background-color: #7f8c8d; /* Asbestos */
+}
+
+.avatar-placeholder.rabbit {
+    background-color: #ecf0f1; /* Clouds */
+    color: #333;
+}
+
+.avatar-placeholder.dog {
+    background-color: #95a5a6; /* Concrete */
+}
+
 .chat-bubble {
     max-width: 70%;
     padding: 12px 18px;
@@ -466,6 +503,16 @@ a.unit-card {
     border-color: #4CAF50;
 }
 
+.grammar-summary {
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 18px;
+}
+
+.grammar-summary li {
+    margin-bottom: 10px;
+}
+
 .spell-input.correct {
     border-color: #28a745;
     background-color: #e9f7ef;
@@ -522,7 +569,8 @@ a.unit-card {
 
 .choice-btn.yes, .choice-btn.no {
     font-size: 16px;
-    width: 65px;
+    width: auto;
+    padding: 0 15px;
     height: 40px;
     border-radius: 20px;
 }
@@ -658,4 +706,30 @@ a.unit-card {
     margin: 0;
     font-size: 14px;
     line-height: 1.5;
+}
+
+/* Reading and Writing Section Styles */
+.reading-passage {
+    background-color: #f8f9fa;
+    border-left: 4px solid #4CAF50;
+    padding: 15px 20px;
+    margin: 20px 0;
+    line-height: 1.7;
+}
+
+.writing-prompt textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 16px;
+    font-family: 'Noto Sans SC', sans-serif;
+    resize: vertical;
+    margin-top: 10px;
+}
+
+.writing-prompt textarea:focus {
+    outline: none;
+    border-color: #4CAF50;
 }
