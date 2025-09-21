@@ -279,6 +279,13 @@ a.unit-card {
     margin-bottom: 5px;
 }
 
+.vocab-card .vocab-ph {
+    display: block;
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
 .vocab-card .vocab-cn {
     display: block;
     font-size: 16px;
@@ -501,6 +508,66 @@ a.unit-card {
 .spell-input:focus {
     outline: none;
     border-color: #4CAF50;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Lesson Page Layout */
+.lesson-container {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.lesson-content {
+    flex: 1; /* Takes up remaining space */
+}
+
+.sticky-nav {
+    width: 240px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 20px;
+}
+
+.sticky-nav h3 {
+    margin-top: 0;
+    font-size: 18px;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+#lesson-nav-links {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#lesson-nav-links li a {
+    display: block;
+    text-decoration: none;
+    color: #555;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    border-left: 4px solid transparent;
+    transition: all 0.2s;
+}
+
+#lesson-nav-links li a:hover {
+    background-color: #e9ecef;
+    color: #000;
+}
+
+#lesson-nav-links li a.active {
+    background-color: #e8f5e9;
+    color: #4CAF50;
+    font-weight: 700;
+    border-left-color: #4CAF50;
 }
 
 .grammar-summary {

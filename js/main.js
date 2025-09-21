@@ -190,4 +190,43 @@ document.addEventListener('DOMContentLoaded', function() {
         setupGame();
     }
 
+    // --- Sticky Nav and Active Section Highlighting ---
+    const lessonNav = document.getElementById('lesson-nav-links');
+    const sections = document.querySelectorAll('.learning-section');
+
+    if (lessonNav && sections.length > 0) {
+        // 1. Generate Nav Links
+        sections.forEach(section => {
+            const sectionTitle = section.querySelector('h2').textContent;
+            const sectionId = section.id;
+            if (sectionId) {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.textContent = sectionTitle;
+                a.href = `#${sectionId}`;
+                li.appendChild(a);
+                lessonNav.appendChild(li);
+            }
+        });
+
+        // 2. Intersection Observer for active state
+        const navLinks = lessonNav.querySelectorAll('a');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                    });
+                }
+            });
+        }, { rootMargin: '-40% 0px -60% 0px' });
+
+        sections.forEach(section => {
+            if (section.id) {
+                observer.observe(section);
+            }
+        });
+    }
+
 });
