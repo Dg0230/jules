@@ -1,0 +1,12 @@
+{
+  "name": "netlify-pg-query-page",
+  "version": "1.0.0",
+  "description": "A simple page to query a PostgreSQL database on Netlify.",
+  "main": "script.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^8.11.3"
+  }
+}
