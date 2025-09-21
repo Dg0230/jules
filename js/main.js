@@ -2,24 +2,57 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    // --- Vocabulary Card Audio Simulation ---
+    // --- Vocabulary Card Interaction ---
+    // New logic: First click reveals Chinese, subsequent clicks play audio.
+    // A "hide" button allows re-hiding the meaning.
     const vocabCards = document.querySelectorAll('.vocab-card');
 
     vocabCards.forEach(card => {
-        card.addEventListener('click', function() {
-            const audioSrc = this.dataset.audioSrc;
-            if (audioSrc) {
-                // In a real application, you would use the Web Audio API.
-                // Since audio files are not available, we'll show an alert.
-                alert(`Playing audio for: ${this.querySelector('.vocab-en').textContent}\n(Audio file not found: ${audioSrc})`);
+        const chineseMeaning = card.querySelector('.vocab-cn'); // CORRECTED: from .vocab-zh to .vocab-cn
+        const hideBtn = card.querySelector('.hide-btn');
 
-                // Add a visual feedback class
-                this.classList.add('playing');
-                setTimeout(() => {
-                    this.classList.remove('playing');
-                }, 300); // Remove class after animation
+        // Main card click listener
+        card.addEventListener('click', function(event) {
+            // Ignore clicks on the hide button itself
+            if (event.target === hideBtn) {
+                return;
+            }
+
+            const isRevealed = card.dataset.revealed === 'true';
+
+            if (!isRevealed) {
+                // First click: Reveal Chinese text and the hide button
+                if (chineseMeaning) chineseMeaning.style.display = 'block';
+                if (hideBtn) hideBtn.style.display = 'inline';
+                card.dataset.revealed = 'true';
+            } else {
+                // Subsequent clicks: Play audio simulation
+                const audioSrc = this.dataset.audioSrc;
+                if (audioSrc) {
+                    alert(`Playing audio for: ${this.querySelector('.vocab-en').textContent}\n(Audio file not found: ${audioSrc})`);
+
+                    // Add a visual feedback class for the click
+                    this.classList.add('playing');
+                    setTimeout(() => {
+                        this.classList.remove('playing');
+                    }, 300);
+                }
             }
         });
+
+        // Add a separate listener for the hide button
+        if (hideBtn) {
+            hideBtn.addEventListener('click', function(event) {
+                event.stopPropagation(); // VERY IMPORTANT: Prevents the card's click event from firing
+
+                // Hide the Chinese text and the button itself
+                if (chineseMeaning) chineseMeaning.style.display = 'none';
+                this.style.display = 'none';
+
+                // Reset the state
+                card.dataset.revealed = 'false';
+            });
+        }
     });
 
     // --- Spelling Exercise ---

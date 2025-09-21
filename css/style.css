@@ -286,11 +286,29 @@ a.unit-card {
     margin-bottom: 10px;
 }
 
+/* CORRECTED CLASS and consolidated rules */
 .vocab-card .vocab-cn {
-    display: block;
+    display: none; /* Hidden by default, revealed by JS */
     font-size: 16px;
     color: #666;
     margin-bottom: 15px;
+}
+
+.vocab-card .hide-btn {
+    display: none; /* Hidden by default, revealed by JS */
+    font-size: 13px;
+    color: #888;
+    cursor: pointer;
+    margin-top: 10px;
+    text-decoration: underline;
+}
+.vocab-card .hide-btn:hover {
+    color: #333;
+}
+
+.vocab-card.is-revealed .vocab-cn,
+.vocab-card.is-revealed .hide-btn {
+    display: block;
 }
 
 .vocab-card .audio-icon {
