@@ -5,12 +5,13 @@ const { Pool } = require('pg');
 // pg library automatically uses environment variables for connection.
 // See: https://node-postgres.com/features/connecting#environment-variables
 // Required variables: PGHOST, PGDATABASE, PGUSER, PGPASSWORD, PGPORT
-const pool = new Pool();
 
 const PAGE_SIZE = 200;
 
 exports.handler = async (event, context) => {
   try {
+    const pool = new Pool();
+
     // 1. Get offset from query string, default to 0
     const offset = parseInt(event.queryStringParameters?.offset, 10) || 0;
 

@@ -1,6 +1,5 @@
 [functions]
   directory = "netlify/functions"
 
-[[functions]]
-  name = "query"
+[functions.query]
   included_files = ["query.sql"]
