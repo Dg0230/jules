@@ -15,8 +15,8 @@ exports.handler = async (event, context) => {
     const offset = parseInt(event.queryStringParameters?.offset, 10) || 0;
 
     // 2. Read the user-defined SQL query from the file
-    // The query file is in the root, two levels up from this function file.
-    const queryFilePath = path.resolve(__dirname, '../../query.sql');
+    // The query file is included by Netlify in the same directory as the function.
+    const queryFilePath = path.resolve(__dirname, 'query.sql');
     const userQuery = await fs.readFile(queryFilePath, 'utf8');
 
     if (!userQuery.trim()) {
